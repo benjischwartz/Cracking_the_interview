@@ -14,4 +14,12 @@ public class Node {
         }
         n.next = end;
     }
+
+    public int getData() {
+        return this.data;
+    }
+
+    public Node getNext() {
+        return this.next;
+    }
 }

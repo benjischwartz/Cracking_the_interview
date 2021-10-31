@@ -7,14 +7,15 @@ public class removeDups {
         HashSet<Integer> unique = new HashSet<>();
         
         // loop through linked list and add all data to a HashSet 
-        while (n != null) {
-            unique.add(n.data);
-            n = n.next;
+        Node nItr = n.getNext();
+        while (nItr != null) {
+            unique.add(nItr.getData());
+            nItr = nItr.getNext();
         }
 
         // reconstruct linked list with unique elements
         Iterator<Integer> itr = unique.iterator();
-        Node newList = new Node(n.data);
+        Node newList = new Node(n.getData());
         itr.next(); // move past first element
         while (itr.hasNext()) {
             newList.appendToTail(itr.next());
@@ -23,20 +24,27 @@ public class removeDups {
     }
 
     public static void printLinkedList(Node n) {
-        while (n != null) {
-            System.out.print(n.data);
+        while (n.getNext() != null) {
+            System.out.print(n.getData());
             System.out.print("-->");
-            n = n.next;
+            n = n.getNext();
         }
-    //    System.out.println(n.data);
+        System.out.println(n.getData());
     }
     
     public static void main(String[] args) {
         Node nodeOne = new Node(1);
-        nodeOne.appendToTail(2);
-        nodeOne.appendToTail(3);
+        Random rand = new Random();
+        for (int i = 0; i < 100; i++) {
+            nodeOne.appendToTail(rand.nextInt(100));
+        }
+        printLinkedList(nodeOne);
+        System.out.println("-------------------------------------");
+        nodeOne = removeDups(nodeOne);
         printLinkedList(nodeOne);
     }
+
+    
 }
 
 
