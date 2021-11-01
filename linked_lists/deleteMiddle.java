@@ -23,7 +23,8 @@ public class deleteMiddle {
         nodeOne.appendToTail(3);
         nodeOne.appendToTail(4);
         printLinkedList(nodeOne);
-       
+        
+        System.out.println("Deleting second node");
         Node secondNode = nodeOne.getNext();
         deleteMiddle(secondNode);
         printLinkedList(nodeOne);
