@@ -59,9 +59,34 @@ public class PermWithoutDups {
         return new String(updatedArr);
     }
 
+    public static int factorial (int num) {
+        
+        if (num < 0) {
+            return 0;
+        }
+
+        if (num == 0) {
+            return 1;
+        }
+
+        int answer = num;
+        num--;
+        while (num > 0) {
+            answer = answer*num;
+            num--;
+        }
+        return answer;
+    }
+
     public static void main (String[] args) {
         
-        System.out.println(PermWithoutDups(args[0]));
+        List<String> result = PermWithoutDups(args[0]);
+        System.out.println(result);
+        System.out.println(result.size());
+        System.out.print(args[0].length());
+        System.out.print("! = ");
+        System.out.println(factorial(args[0].length()));
+        
     }
 }
 
