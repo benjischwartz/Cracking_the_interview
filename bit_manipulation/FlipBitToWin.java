@@ -59,8 +59,9 @@ public class FlipBitToWin {
 
     public static void main(String[] args) {
         System.out.println(GreatestLength(1775));
+
         System.out.print("Length: ");
         System.out.println(getLength(1775));
-        
+        System.out.println(GreatestLength(0)); 
     }
 }
