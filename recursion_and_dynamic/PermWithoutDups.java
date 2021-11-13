@@ -2,35 +2,51 @@ import java.util.*;
 import java.lang.*;
 
 public class PermWithoutDups {
+    
+    // base case:
+    // if input.length() == 1 {
+    //      return [input]
+    // }
+    //
+    // else {
+    //      return permutations(firstLetter, permwithoutdups(stringWithoutFirstLetter));
+    // }
+
+
     public static List<String> PermWithoutDups(String input) {
-        List<String> newStringList = new ArrayList<String>();
-        if (input.isEmpty()) {
-           return newStringList;
+        List<String> returnList = new ArrayList<String>();
+        
+        // base case
+        if (input.length() == 1) {
+            returnList.add(input);
+            return returnList;
         }
 
-        String curr = Character.toString(input.charAt(0));
-        // for (int i = 0; i < newStringList.size(); i++) {
-        //    for (int j = 0; j < newStringList.)
-        //    String newString = newStringList.get(i).concat(curr);
-        //    newStringList.add(newString);
-        // }
-        newStringList.add(curr);
-        
-        // remove character from the String
-        String newString = input.substring(1);
-        newString.trim();
-        newStringList.addAll(PermWithoutDups(newString));
-        return newStringList;
-    }
+        // recursive case
+        else {
+            // get first letter
+            char ch = input.charAt(0);
 
-    public static List<String> ListCharPerms(String letter, List<String> stringList) {
-        List<String> returnList = new List<String>();
-        for (int i = 0; i < stringList.size(); i++) {
-            String curr = stringList.get(i);
-            for (int j = 0; j < curr.length(); j++) {
-                returnList.add(addChar(curr, letter.get(0), j));
+            // trim string
+            char[] updatedArr = new char[input.length() - 1];
+            input.getChars(1, input.length(), updatedArr, 0);
+            String updatedStr = new String(updatedArr);
+
+            returnList.addAll(charStringPerms(ch, PermWithoutDups(updatedStr)));
+        }
+        return returnList;
+    }
+    
+    public static List<String> charStringPerms(char ch, List<String> strings) {
+        List<String> newStringList = new ArrayList<String>();
+        for (int i = 0; i < strings.size(); i++) {
+            String curr = strings.get(i);
+            for (int j = 0; j < (curr.length() + 1); j++) {
+                String newString = addChar(strings.get(i), ch, j);
+                newStringList.add(newString);
             }
         }
+        return newStringList;
     }
 
     public static String addChar(String str, char ch, int position) {
@@ -45,8 +61,7 @@ public class PermWithoutDups {
 
     public static void main (String[] args) {
         
-        String[] strArray = {"one", "two", "three"};
-        System.out.println(ListCharPerms("a", strArray); 
+        System.out.println(PermWithoutDups(args[0]));
     }
 }
 
