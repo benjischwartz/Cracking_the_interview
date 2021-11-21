@@ -4,33 +4,41 @@
 
 // Base Cases:
 //  ON THE EDGE:
-//      if (y == -m) {return 1}
-//      if (x == n) {return 1}
+//      if (y == -m + 1) {return 1}
+//      if (x == n - 1) {return 1}
 
 // Recursion:
 //      return (opt(x, y - 1) + opt(x + 1, y));
 
+// Use a 2x2 array to store results
+
 class UniquePaths {
     public int uniquePaths(int m, int n) {
-        int total = 0;
-        for (int x = 0; x < n; x++) {
-            for (int y = 0; y > -m; y--) {
-                total += uniquePathsFromXY(x, y, m, n);
-            }
-        }
-        return total;
+        int[][] resultMatrix = populateMatrix(m, n);
+        return resultMatrix[0][0];
     }
     
-    public int uniquePathsFromXY(int x, int y, int m, int n) {
-        if (x == n - 1 || y == -m + 1) {
-            return 1;
+    public int[][] populateMatrix(int m, int n) {
+        
+        // Populate our opt matrix
+        int[][] matrix = new int[n][m];
+        for (int y = 0; y < m; y++) {
+            matrix[n - 1][y] = 1;
         }
-        else {
-            return (uniquePathsFromXY(x + 1, y, m, n) + uniquePathsFromXY(x, y - 1, m, n));
+        for (int x = 0; x < n; x++) {
+            matrix[x][m - 1] = 1;
         }
+        
+        for (int i = n - 2; i >= 0; i--) {
+            for (int j = m - 2; j >= 0; j--) {
+                matrix[i][j] = matrix[i + 1][j] + matrix[i][j + 1];
+            }
+        }
+        return matrix;        
+        
     }
 }
 
-// [][]
-// [][]
-// [][]
+// [][][][][]
+// [][][][][]
+// [][][][][]
