@@ -1,3 +1,7 @@
+import java.lang.*;
+import java.util.*;
+
+
 class LRUCache {
 
     int capacity;
@@ -36,6 +40,7 @@ class LRUCache {
                 curr.prev.next = null;
                 curr.next = this.head;
                 this.tail = curr.prev;
+                this.tail.next = null;
                 curr.prev = null;
                 this.head = curr;
                 return curr.value;
@@ -76,6 +81,8 @@ class LRUCache {
         else if (map.size() < capacity) {
             ListNode node = new ListNode(key, value);
             map.put(key, node);
+            node.prev = null;
+            this.head.prev = node;
             node.next = this.head;
             this.head = node;
         }
@@ -85,17 +92,16 @@ class LRUCache {
             if (capacity == 1) {
                 ListNode node = new ListNode(key, value);
                 map.put(key, node);
+                map.remove(head.key);
                 head = node;
                 tail = node;
             }
             else {
-                ListNode oldTail = this.tail;
-                map.remove(oldTail.key);
-                System.out.println("Removing Tail!");
-                System.out.println(oldTail.key);
-                if (oldTail.prev != null) {
-                    this.tail = oldTail.prev;
-                    this.tail.next = null;
+                if (tail.prev != null) {
+                    tail.prev.next = null;
+                    map.remove(tail.key);
+                    this.tail = tail.prev;
+                    System.out.println("Removing tail!");
                 }
                 ListNode node = new ListNode(key, value);
                 map.put(key, node);
@@ -103,6 +109,35 @@ class LRUCache {
                 this.head = node;
             }
         }
+    }
+    public void printCache() {
+        System.out.println("Printing Cache:");
+        ListNode curr = this.head;
+        while (curr != null) {
+            System.out.print("Node Key: ");
+            System.out.print(curr.key);
+            System.out.print(" Node Value: ");
+            System.out.println(curr.value);
+            curr = curr.next;
+        }
+        System.out.print(" Tail Key: ");
+        System.out.println(tail.key);
+        System.out.print(" Map Size: ");
+        System.out.println(map.size());
+    }
+
+    public static void main(String[] args) {
+        LRUCache cache = new LRUCache(2);
+        cache.put(1, 1);
+        cache.put(2, 2);
+        cache.get(2);
+        cache.printCache();
+        cache.put(3, 3);
+        cache.printCache();
+        cache.put(4, 4);
+        cache.printCache();
+        cache.get(1);
+        cache.printCache();
     }
 }
 
