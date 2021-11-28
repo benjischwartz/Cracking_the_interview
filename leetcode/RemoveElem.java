@@ -1,45 +1,27 @@
 class RemoveElem {
     public int removeElement(int[] nums, int val) {
         
-        // Check for empty array
-        if (nums.length == 0) {
-            return 0;
-        }
         
-        // Check if 1 element
-        if (nums.length == 1) {
-            if (nums[0] == val) {
-                return 0;
-            } return 1;
-        }
-        
-        int counter = 0;
-        int repeats = 0;
-        
-        // Get count of repeats
-        int r = 0;
-        for (int c = 0; c < nums.length; c++) {
-            if (nums[c] == val) {
-                r++;
+        // Count number of elements to remove
+        int count = 0;
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] == val) {
+                count++;
             }
         }
-        for (int i = 0; i < nums.length - r + 1; i++) {
-            if (nums[i] == val) {
-                repeats++;
-                for (int j = i + 1; j < nums.length; j++) {
-                    if (nums[j] == val) {
-                        repeats++;
-                    } else {
+        
+        // If an element is == val, swap with nearest non-val element
+        for (int j = 0; j < nums.length - count; j++) {
+            if (nums[j] == val) {
+                for (int k = (j + 1); k < nums.length; k++) {
+                    if (nums[k] != val) {
+                        nums[j] = nums[k];
+                        nums[k] = val;
                         break;
                     }
                 }
-                
-                // Shift array down by 'repeats'
-                for (int k = i; k < nums.length - repeats; k++) {
-                    nums[k] = nums[k + repeats];
-                }
-            }    
+            }
         }
-        return nums.length - r;
+        return nums.length - count;
     }
 }
