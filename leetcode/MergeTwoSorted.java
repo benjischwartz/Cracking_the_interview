@@ -15,43 +15,37 @@ class MergeTwoSorted {
             return l2;
         }
         
-        if (l2 == null) {
+        else if (l2 == null) {
             return l1;
         }
         
         ListNode head = new ListNode();
         if (l1.val <= l2.val) {
-            ListNode temp = l1.next;
             head = l1;
-            head.next = temp;
+            l1 = l1.next;
         } else {
-            ListNode temp = l2.next;
             head = l2;
-            head.next = temp;
+            l2 = l2.next;
         }
-        
+       
+        ListNode tail = head;
         while (l1 != null && l2 != null) {
+            ListNode temp = null;
             if (l1.val <= l2.val) {
-                appendToTail(head, l1);
+                temp = l1;
                 l1 = l1.next;
             } else {
-                appendToTail(head, l2);
+                temp = l2;
                 l2 = l2.next;
-            }    
+            }
+            tail.next = temp;
+            tail = temp;
         }
         if (l1 != null) {
-            appendToTail(head, l1);
+            tail.next = l1;
         } else if (l2 != null) {
-            appendToTail(head, l2);
+            tail.next = l2;
         }
         return head;
-    }
-    
-    public void appendToTail(ListNode head, ListNode node) {
-        ListNode temp = head;
-        while (temp.next != null) {
-            temp = temp.next;
-        }
-        temp.next = node;
     }
 }
