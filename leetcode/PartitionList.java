@@ -63,4 +63,8 @@ class PartitionList {
         tail1.next = head2;
         return head1;
     }
+    public static void main(String[] args) {
+        ListNode node1 = new ListNode(3);
+        ListNode node2 = new ListNode(5, node1);
+    }
 }
